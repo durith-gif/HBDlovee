@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Press Start 2P', cursive;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: background 0.8s ease;
+        }
+
+        
+        body.scene-earth {
+            background: linear-gradient(180deg, #1e90ff 0%, #87ceeb 55%, #fff5cc 80%);
+        }
+        body.scene-earth .m1, body.scene-earth .m2, body.scene-earth .m3 { border-bottom-color: #c68b59; }
+        body.scene-earth .ground { background: #4caf50; border-top-color: #388e3c; }
+
+        body.scene-namek {
+            background: linear-gradient(180deg, #1b7a5c 0%, #5cd6a9 60%, #b3ffe0 85%);
+        }
+        body.scene-namek .m1, body.scene-namek .m2, body.scene-namek .m3 { border-bottom-color: #2c6e8a; }
+        body.scene-namek .ground { background: #1ca39e; border-top-color: #137a76; }
+
+        body.scene-shenlong {
+            background: radial-gradient(circle at center, #3b0d36 0%, #090d16 75%, #000000 100%);
+        }
+        body.scene-shenlong .m1, body.scene-shenlong .m2, body.scene-shenlong .m3 { border-bottom-color: #1a1a2e; }
+        body.scene-shenlong .ground { background: #16213e; border-top-color: #0f3460; }
+        body.scene-shenlong .cloud { opacity: 0.15; }
+
+        body.scene-sunset {
+            background: linear-gradient(180deg, #4a0e4e 0%, #c83e37 45%, #ff9a3c 80%);
+        }
+        body.scene-sunset .m1, body.scene-sunset .m2, body.scene-sunset .m3 { border-bottom-color: #4a1c1c; }
+        body.scene-sunset .ground { background: #6b2d2d; border-top-color: #421818; }
+
+        
+        .cloud {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50px;
+            opacity: 0.9;
+            animation: moveClouds 35s linear infinite;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+        }
+        .cloud::after, .cloud::before {
+            content: '';
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+        }
+        .c1 { width: 120px; height: 40px; top: 9%; left: -150px; }
+        .c1::before { width: 50px; height: 50px; top: -25px; left: 15px; }
+        .c1::after { width: 70px; height: 70px; top: -35px; left: 40px; }
+
+        .c2 { width: 160px; height: 50px; top: 20%; left: -200px; animation-duration: 45s; animation-delay: 5s; }
+        .c2::before { width: 70px; height: 70px; top: -35px; left: 20px; }
+        .c2::after { width: 90px; height: 90px; top: -45px; left: 60px; }
+
+        @keyframes moveClouds {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(100vw + 300px)); }
+        }
+
+        
+        .stars {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 70%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 140px 70px, #ffd700, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 290px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 410px 90px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 550px 20px, #ffd700, rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 600px 150px;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            z-index: 1;
+        }
+        body.scene-shenlong .stars { opacity: 1; }
+
+        
+        .dragon-ball {
+            position: absolute;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffd700, #ff8c00 60%, #cc5500 100%);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #d90000;
+            font-size: 12px;
+            animation: floatBall 3s ease-in-out infinite alternate;
+            z-index: 2;
+        }
+        .db-1 { top: 10%; left: 8%; animation-delay: 0s; }
+        .db-2 { top: 14%; right: 10%; animation-delay: 1s; }
+        .db-3 { top: 44%; left: 6%; animation-delay: 0.5s; }
+        .db-4 { top: 46%; right: 7%; animation-delay: 1.5s; }
+
+        @keyframes floatBall {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-12px); }
+        }
+
+        
+        .scenery {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 28%;
+            z-index: 1;
+        }
+        .mountain {
+            position: absolute;
+            bottom: 55px;
+            width: 0;
+            height: 0;
+            border-left: 115px solid transparent;
+            border-right: 115px solid transparent;
+            border-bottom: 165px solid #c68b59;
+            transition: border-bottom-color 0.8s ease;
+        }
+        .m1 { left: 5%; }
+        .m2 { left: 20%; transform: scale(0.8); filter: brightness(0.85); }
+        .m3 { right: 8%; transform: scale(1.05); filter: brightness(0.92); }
+
+        .ground {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 62px;
+            border-top: 8px solid;
+            transition: background 0.8s ease, border-top-color 0.8s ease;
+        }
+
+        
+        .main-container {
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 100%;
+            width: 92%;
+            max-width: 900px;
+            padding: 18px 0 14px 0;
+        }
+
+        h1 {
+            color: #ffeb3b;
+            text-shadow: 4px 4px 0px #d32f2f, -2px -2px 0px #000;
+            font-size: clamp(1.1rem, 2.8vw, 1.85rem);
+            text-align: center;
+            line-height: 1.35;
+        }
+
+        
+        .dialog-box {
+            background: rgba(15, 23, 42, 0.93);
+            border: 6px solid #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 0 0 4px #000000, 0 10px 25px rgba(0,0,0,0.55);
+            padding: 22px 20px 14px 20px;
+            width: 100%;
+            max-width: 650px;
+            color: #ffffff;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            z-index: 20;
+        }
+
+        .dialog-label {
+            position: absolute;
+            top: -15px;
+            left: 18px;
+            background: #ff6f00;
+            color: #fff;
+            padding: 4px 12px;
+            font-size: 0.65rem;
+            border: 3px solid #000;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .message-text {
+            width: 100%;
+            min-height: 82px;
+            color: #ffffff;
+            font-size: clamp(0.72rem, 1.45vw, 0.9rem);
+            line-height: 1.75;
+            transition: opacity 0.25s ease;
+        }
+
+        .dialog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 2px dashed rgba(255,255,255,0.2);
+            padding-top: 10px;
+            gap: 10px;
+        }
+
+        .page-indicator {
+            font-size: 0.58rem;
+            color: #ffd700;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        .retro-btn {
+            background: #ff6f00;
+            color: #ffffff;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.65rem;
+            padding: 9px 13px;
+            border: 3px solid #000000;
+            border-radius: 6px;
+            box-shadow: inset -3px -3px 0px #b34700, 0 4px 0 #000000;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+        }
+        .retro-btn:hover { background: #ff8f00; }
+        .retro-btn:active { transform: translateY(3px); box-shadow: inset -2px -2px 0px #b34700, 0 1px 0 #000000; }
+
+        .back-btn {
+            background: #2563eb;
+            box-shadow: inset -3px -3px 0px #1e3a8a, 0 4px 0 #000000;
+            display: none;
+        }
+        .back-btn:hover { background: #3b82f6; }
+
+        
+        .characters-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: clamp(16px, 5vw, 60px);
+            width: 100%;
+            min-height: 215px;
+            margin-bottom: 6px;
+            position: relative;
+        }
+
+        .character-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            filter: drop-shadow(0 10px 8px rgba(0,0,0,0.4));
+            transform-origin: bottom center;
+            transition: 
+                transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.4s ease,
+                filter 0.3s ease,
+                width 0.5s ease,
+                margin 0.5s ease;
+        }
+
+        .character-wrapper:hover {
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.95));
+        }
+
+        
+        .char-heart {
+            margin-top: 8px;
+            font-size: 1.05rem;
+            color: #ff2e63;
+            text-shadow: 2px 2px 0px #000000, -1px -1px 0px #000000;
+            animation: heartbeat 1.3s ease-in-out infinite;
+            user-select: none;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.22); }
+        }
+
+        
+        .characters-row:not(.single-mode) .float-slow { animation: hoverChar 2.1s ease-in-out infinite alternate; }
+        .characters-row:not(.single-mode) .float-alt  { animation: hoverChar 1.8s ease-in-out infinite alternate-reverse; }
+
+        @keyframes hoverChar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+
+        
+        .characters-row.single-mode {
+            gap: 0;
+        }
+
+        .characters-row.single-mode .character-wrapper:not(.focused) {
+            opacity: 0;
+            transform: scale(0.2) translateY(40px);
+            pointer-events: none;
+            width: 0;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .characters-row.single-mode .character-wrapper.focused {
+            transform: scale(1.42) translateY(-6px);
+            filter: drop-shadow(0 0 22px rgba(255, 235, 59, 0.9));
+            z-index: 15;
+        }
+
+        .characters-row.single-mode .character-wrapper.focused .char-heart {
+            color: #ffeb3b;
+        }
+
+        canvas {
+            image-rendering: pixelated;
+        }
+
+        @media (max-width: 600px) {
+            .characters-row { gap: 10px; min-height: 175px; }
+            .char-heart { font-size: 0.85rem; }
+            .characters-row.single-mode .character-wrapper.focused {
+                transform: scale(1.3) translateY(-4px);
+            }
+        }
+    </style>
+</head>
+<body class="scene-earth">
+
+    <div class="stars"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+
+    
+    <div class="dragon-ball db-1">★</div>
+    <div class="dragon-ball db-2">★★</div>
+    <div class="dragon-ball db-3">★★★</div>
+    <div class="dragon-ball db-4">★★★★</div>
+
+    
+    <div class="scenery">
+        <div class="mountain m1"></div>
+        <div class="mountain m2"></div>
+        <div class="mountain m3"></div>
+        <div class="ground"></div>
+    </div>
+
+    
+    <div class="main-container">
+        <h1>¡FELIZ CUMPLEAÑOS!</h1>
+
+        
+        <div class="dialog-box">
+            <div class="dialog-label" id="dialogLabel">LA TIERRA</div>
+            
+            <div class="message-text" id="messageText">
+                
+            </div>
+
+            <div class="dialog-footer">
+                <span class="page-indicator" id="pageIndicator">1 / 4 </span>
+                <div class="btn-group">
+                    <button class="retro-btn back-btn" id="backBtn">⬅ TODOS</button>
+                    <button class="retro-btn" id="nextBtn">SIGUIENTE ▶</button>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="characters-row" id="charactersRow">
+            
+            <div class="character-wrapper float-alt" data-char="0">
+                <canvas id="roseChibiCanvas"></canvas>
+                <span class="char-heart">♥</span>
+            </div>
+
+            
+            <div class="character-wrapper float-slow" data-char="1">
+                <canvas id="gokuOriginalCanvas"></canvas>
+                <span class="char-heart">♥</span>
+            </div>
+
+            
+            <div class="character-wrapper float-alt" data-char="2">
+                <canvas id="ssjChibiCanvas"></canvas>
+                <span class="char-heart">♥</span>
+            </div>
+
+            
+            <div class="character-wrapper float-slow" data-char="3">
+                <canvas id="vegetaChibiCanvas"></canvas>
+                <span class="char-heart">♥</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        const introSlides = [
+            {
+                sceneClass: "scene-earth",
+                label: "♥",
+                text: "Feliz cumpleañooos, Hoy celebramos tu vida y lo increíble que eres, espero siempre estes rodeado de gente que te ame y que tengas una linda vida."
+            },
+            {
+                sceneClass: "scene-namek",
+                label: "♥",
+                text: "Eres muy importante para mi, eres divertido, lindo y una persona muy linda en realidad. "
+            },
+            {
+                sceneClass: "scene-shenlong",
+                label: "♥",
+                text: "Gracias por cada plática, cada risa y cada momento compartido. Estar contigo es algo que aprecio demasiado, amo estar a tu lado y poder pasar tiempo juntos."
+            },
+            {
+                sceneClass: "scene-sunset",
+                label: "♥",
+                text: "Toca cada personaje (o su corazoncito) para leer más mensajitos, te amoo"
+            }
+        ];
+
+        
+        const characterSoloMessages = [
+            {
+                
+                sceneClass: "scene-shenlong",
+                label: "♥ PARA TI ♥",
+                text: "Te quiero y te amo mucho mucho, conocerte ha marcado mucho mis dias, espero podamos elegirnos siempre."
+            },
+            {
+                
+                sceneClass: "scene-earth",
+                label: "♥ PARA TI ♥",
+                text: "Espero siempre puedas ser tú estando conmigo, espero hacerte sentir feliz, comodo, seguro y tranquilo siempre que estemos juntos."
+            },
+            {
+                
+                sceneClass: "scene-namek",
+                label: "♥ PARA TI ♥",
+                text: "Te adoro muchisimo, en los dias buenos y no tan buenos siempre estare para ti, espero siempre puedas confiar en mi y poder ser tu apoyo y compañia."
+            },
+            {
+                
+                sceneClass: "scene-sunset",
+                label: "♥ PARA TI ♥",
+                text: "Que cumplas todo lo que te propongas y que este nuevo año este lleno de logros, paz y muchas cosas lindas para ti, se feliz siempre, feliz vida corazoncito. Te amo siempre - Iris."
+            }
+        ];
+
+        let introIndex = 0;
+
+        const body = document.body;
+        const dialogLabel = document.getElementById('dialogLabel');
+        const messageText = document.getElementById('messageText');
+        const pageIndicator = document.getElementById('pageIndicator');
+        const nextBtn = document.getElementById('nextBtn');
+        const backBtn = document.getElementById('backBtn');
+        const charactersRow = document.getElementById('charactersRow');
+        const charWrappers = document.querySelectorAll('.character-wrapper');
+
+        function updateBoxContent(sceneClass, label, text, indicator) {
+            messageText.style.opacity = 0;
+            setTimeout(() => {
+                body.className = sceneClass;
+                dialogLabel.textContent = label;
+                messageText.textContent = text;
+                pageIndicator.textContent = indicator;
+                messageText.style.opacity = 1;
+            }, 180);
+        }
+
+        function showIntroMode() {
+            charactersRow.classList.remove('single-mode');
+            charWrappers.forEach(w => w.classList.remove('focused'));
+            backBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+
+            const slide = introSlides[introIndex];
+            updateBoxContent(
+                slide.sceneClass,
+                slide.label,
+                slide.text,
+                `${introIndex + 1} / ${introSlides.length} `
+            );
+        }
+
+        function selectSoloCharacter(charIdx) {
+            charactersRow.classList.add('single-mode');
+            
+            charWrappers.forEach(w => w.classList.remove('focused'));
+            charWrappers[charIdx].classList.add('focused');
+
+            nextBtn.style.display = 'none';
+            backBtn.style.display = 'inline-block';
+
+            const charData = characterSoloMessages[charIdx];
+            updateBoxContent(
+                charData.sceneClass,
+                charData.label,
+                charData.text,
+                "Regresa para otro mensajito"
+            );
+        }
+
+        nextBtn.addEventListener('click', () => {
+            introIndex = (introIndex + 1) % introSlides.length;
+            showIntroMode();
+        });
+
+        backBtn.addEventListener('click', () => {
+            showIntroMode();
+        });
+
+        charWrappers.forEach(wrapper => {
+            wrapper.addEventListener('click', () => {
+                const idx = parseInt(wrapper.getAttribute('data-char'));
+                selectSoloCharacter(idx);
+            });
+        });
+
+        
+        showIntroMode();
+
+        
+        const colors = {
+            'K': '#111111',
+            'S': '#fcd5b5',
+            'W': '#ffffff',
+            'O': '#f26522',
+            'B': '#0047ab',
+            'R': '#8b4513',
+            'Y': '#ffd700',
+            'P': '#ff85c0',
+            'A': '#4a5568'
+        };
+
+        function drawSprite(canvasId, sprite, pixelSize) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            canvas.width = sprite[0].length * pixelSize;
+            canvas.height = sprite.length * pixelSize;
+
+            for (let y = 0; y < sprite.length; y++) {
+                for (let x = 0; x < sprite[y].length; x++) {
+                    const char = sprite[y][x];
+                    if (colors[char]) {
+                        ctx.fillStyle = colors[char];
+                        ctx.fillRect(x * pixelSize, y * pixelSize, pixelSize, pixelSize);
+                    }
+                }
+            }
+        }
+
+        const gokuOriginalSprite = [
+            ".........KKKKK................",
+            ".........KKKKKKKK.............",
+            ".....KKKKKKKKKKKKK............",
+            "......KKKKKKKKKKKKK...........",
+            ".......KKKKKKKKKKKKKKKKK......",
+            "........KKKKKKKKKKKKKKKKK.....",
+            "......KKKKKKKKKKKKKKKKKKKK....",
+            ".....KKKKKKKKKKKKKKKKKKKK.....",
+            "....KKKKKKKKKKKKKKKKKKKK......",
+            "...KKKKKKKKKKKKKKKKKKKKKK.....",
+            ".....KKKKKKKSKKKKKSKKKKKK.....",
+            "....KKKKKKKSSSSSSSSKKKKKKK....",
+            ".....KKKKKSSSSSSSSSSKKKKK.....",
+            "......KKKKSSWKSSSWKSSKKKK.....",
+            "......KKKKSSKKSSSKKSSKKKK.....",
+            ".......KKKSSSSSSSSSSKKK.......",
+            ".........KKSSSSSSSSKK.........",
+            "..........KKKKKKKKKK..........",
+            ".........KKOOOBBOOOOKK........",
+            "........KKOOOOBBOOOOOKK.......",
+            ".......KKSSOOOOOOOOOOKK.......",
+            "......KKBBOOOOOOOOOOBBKK......",
+            "......KKSSBBBBBBBBBBSSKK......",
+            ".......KKKOOOOOOOOOOKKK.......",
+            ".........KKOOROOOOOOKK........",
+            ".........KKOOOOOOOOOKK........",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKKKKK....KKKKKK......"
+        ];
+
+        const ssjChibiSprite = [
+            ".........YYYYY................",
+            ".........YYYYYYYY.............",
+            ".....YYYYYYYYYYYYY............",
+            "......YYYYYYYYYYYYY...........",
+            ".......YYYYYYYYYYYYYYYYY......",
+            "........YYYYYYYYYYYYYYYYY.....",
+            "......YYYYYYYYYYYYYYYYYYYY....",
+            ".....YYYYYYYYYYYYYYYYYYYY.....",
+            "....YYYYYYYYYYYYYYYYYYYY......",
+            "...YYYYYYYYYYYYYYYYYYYYYY.....",
+            ".....KKKKKKKSKKKKKSKKKKKK.....",
+            "....KKKKKKKSSSSSSSSKKKKKKK....",
+            ".....KKKKKSSSSSSSSSSKKKKK.....",
+            "......KKKKSSWKSSSWKSSKKKK.....",
+            "......KKKKSSKKSSSKKSSKKKK.....",
+            ".......KKKSSSSSSSSSSKKK.......",
+            ".........KKSSSSSSSSKK.........",
+            "..........KKKKKKKKKK..........",
+            ".........KKOOOBBOOOOKK........",
+            "........KKOOOOBBOOOOOKK.......",
+            ".......KKSSOOOOOOOOOOKK.......",
+            "......KKBBOOOOOOOOOOBBKK......",
+            "......KKSSBBBBBBBBBBSSKK......",
+            ".......KKKOOOOOOOOOOKKK.......",
+            ".........KKOOROOOOOOKK........",
+            ".........KKOOOOOOOOOKK........",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKKKKK....KKKKKK......"
+        ];
+
+        const roseChibiSprite = [
+            ".........PPPPP................",
+            ".........PPPPPPPP.............",
+            ".....PPPPPPPPPPPPP............",
+            "......PPPPPPPPPPPPP...........",
+            ".......PPPPPPPPPPPPPPPPP......",
+            "........PPPPPPPPPPPPPPPPP.....",
+            "......PPPPPPPPPPPPPPPPPPPP....",
+            ".....PPPPPPPPPPPPPPPPPPPP.....",
+            "....PPPPPPPPPPPPPPPPPPPP......",
+            "...PPPPPPPPPPPPPPPPPPPPPP.....",
+            ".....KKKKKKKSKKKKKSKKKKKK.....",
+            "....KKKKKKKSSSSSSSSKKKKKKK....",
+            ".....KKKKKSSSSSSSSSSKKKKK.....",
+            "......KKKKSSWKSSSWKSSKKKK.....",
+            "......KKKKSSKKSSSKKSSKKKK.....",
+            ".......KKKSSSSSSSSSSKKK.......",
+            ".........KKSSSSSSSSKK.........",
+            "..........KKKKKKKKKK..........",
+            ".........KKAAARROOOOKK........",
+            "........KKAAAAOOOOOOOKK.......",
+            ".......KKSSAAAAAAAAOOKK.......",
+            "......KKBBAAAAAAAAAABBKK......",
+            "......KKSSBBBBBBBBBBSSKK......",
+            ".......KKKAAAAAAAAAOKKK.......",
+            ".........KKAAARROOOOKK........",
+            ".........KKAAAAAAAAOKK........",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKKKKK....KKKKKK......"
+        ];
+
+        const vegetaChibiSprite = [
+            "..............................",
+            "..............................",
+            ".....KKKKKKKKKKKKK............",
+            "......KKKKKKKKKKKKK...........",
+            ".......KKKKKKKKKKKKKKKKK......",
+            "........KKKKKKKKKKKKKKKKK.....",
+            "......KKKKKKKKKKKKKKKKKKKK....",
+            ".....KKKKKKKKKKKKKKKKKKKK.....",
+            "....KKKKKKKKKKKKKKKKKKKK......",
+            "...KKKKKKKKKKKKKKKKKKKKKK.....",
+            ".....KKKKKSSSSSSSSSSKKKKK.....",
+            "....KKKKKSSSSSSSSSSSSKKKKK....",
+            ".....KKKKKSSSSSSSSSSKKKKK.....",
+            "......KKKKSSWKSSSWKSSKKKK.....",
+            "......KKKKSSKKSSSKKSSKKKK.....",
+            ".......KKKSSSSSSSSSSKKK.......",
+            ".........KKSSSSSSSSKK.........",
+            "..........KKKKKKKKKK..........",
+            ".........KKWWWWWWWWWWKK.......",
+            "........KKWWWWWWWWWWWWKK......",
+            ".......KKSSWWWWWWWWWWSSKK.....",
+            "......KKWWWWWWWWWWWWWWWWKK....",
+            "......KKSSBBBBBBBBBBBBSSKK....",
+            ".......KKKBBBBBBBBBBBBKKK.....",
+            ".........KKBBBBBBBBBBKK.......",
+            ".........KKBBBBBBBBBBKK.......",
+            "........KKBBBBKKKKBBBBKK......",
+            "........KKWWWWKKKKWWWWKK......",
+            "........KKKKKK....KKKKKK......"
+        ];
+
+        const size = window.innerWidth < 600 ? 4 : 6;
+        drawSprite('roseChibiCanvas', roseChibiSprite, size);
+        drawSprite('gokuOriginalCanvas', gokuOriginalSprite, size + 1);
+        drawSprite('ssjChibiCanvas', ssjChibiSprite, size);
+        drawSprite('vegetaChibiCanvas', vegetaChibiSprite, size);
+    </script>
+</body>
+</html>
